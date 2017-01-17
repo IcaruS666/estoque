@@ -2,14 +2,17 @@
 use Illuminate\Support\Facades\DB;
 use	estoque\Produto;
 use Request;
+
 class ProdutoController	extends Controller{
 	public function lista(){
 	
 		$produtos = DB::select('select * from produtos');
 		return	view('listagem')->withProdutos($produtos);
 	}
-	public function mostra(){
-		$id	= Request::input('id', '0');
+	
+	public function mostra($id){
+
+		$id	= Request::route('id');
 		$resposta = DB::select('select * from produtos where id = ?', [$id]);
 		if(empty($resposta)){
 				return "Esse produto não existe";
